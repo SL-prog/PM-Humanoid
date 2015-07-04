@@ -3,15 +3,15 @@ from tkinter import *
 
 class Window(Frame):
     def __init__(self, master, **kwargs):
-        Frame.__init__(self, master, width=870, height=556, **kwargs)
+        Frame.__init__(self, master, width=600, height=400, **kwargs)
         self.master = master
 
         self.photo = PhotoImage(file="pm.gif")
-        self.canvas = Canvas(self,width=520, height=556)
-        self.canvas.create_image(260,278, image=self.photo)
+        self.canvas = Canvas(self,width=550, height=555)
+        self.canvas.create_image(275,277, image=self.photo)
         self.canvas.pack()
 
-        self.terminal = Canvas(self, width=350, height=556, bg='black')
+        self.terminal = Canvas(self, width=350, height=555, bg='black')
         self.terminal.pack()
         self.terminal.create_text(50,10,text='Servo_tete_x : 80',fill="white")
         self.terminal.create_text(50,30,text='Servo_tete_y : 63',fill="white")
@@ -24,9 +24,9 @@ class Window(Frame):
         self.terminal.grid(column=2,row=1)
 
 
-        self.A = Scale(master, from_=0, to=180,showvalue=0, orient=HORIZONTAL,length=80,width=15,activebackground="ivory",command=self.msg)
-        self.A.pack()
-        self.A_window = self.canvas.create_window(236, 48, window=self.A)
+        self.test = Scale(master, from_=90, to=180, orient=HORIZONTAL)
+        self.test.pack()
+        self.test_window = self.canvas.create_window(400, 10, anchor=NW, window=self.test)
 
         self.test2 = Scale(master, from_=0, to=180, orient=VERTICAL)
         self.test2.pack()
