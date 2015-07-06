@@ -6,6 +6,8 @@ from tkinter import *
 class Window(Frame):
     def __init__(self, master, **kwargs):
         Frame.__init__(self, master, width=600, height=400, **kwargs)
+        self.serial = serial.Serial(port="COM3",baudrate=9600)
+
         self.master = master
 
         self.photo = PhotoImage(file="pm.gif")
@@ -14,11 +16,11 @@ class Window(Frame):
         self.canvas.pack()
         self.canvas.grid(column=1,row=1)
 
-        self.terminal = Canvas(self, width=350, height=588, bg='black')
+        self.terminal = Canvas(self, width=198, height=588, bg='black')
         self.terminal.pack()
         self.terminal.grid(column=2,row=1)
         self.terminal.create_text(45,573,text='Baud : 9600',fill="white")
-        self.terminal.create_text(305,573,text='Port : COM8',fill="white")
+        self.terminal.create_text(160,573,text='Port : COM8',fill="white")
 #----------------
         self.tete_x = StringVar()
         self.A = Scale(master, from_=0, to=180, orient=VERTICAL, length=80, showvalue=0, variable=self.tete_x, command=self.MAJA)
@@ -118,43 +120,42 @@ class Window(Frame):
         self.MAJP()
 
 #-------
-    def MAJA(self, val_ignore):
-        self.MAJ("A")
-    def MAJB(self, val_ignore):
-        self.MAJ("B")
-    def MAJC(self, val_ignore):
-        self.MAJ("C")
-    def MAJD(self, val_ignore):
-        self.MAJ("D")
-    def MAJE(self, val_ignore):
-        self.MAJ("E")
-    def MAJF(self, val_ignore):
-        self.MAJ("F")
-    def MAJG(self, val_ignore):
-        self.MAJ("G")
-    def MAJH(self, val_ignore):
-        self.MAJ("H")
-    def MAJI(self, val_ignore):
-        self.MAJ("I")
-    def MAJJ(self, val_ignore):
-        self.MAJ("J")
-    def MAJK(self, val_ignore):
-        self.MAJ("K")
-    def MAJL(self, val_ignore):
-        self.MAJ("L")
-    def MAJM(self, val_ignore):
-        self.MAJ("M")
-    def MAJN(self, val_ignore):
-        self.MAJ("N")
+    def MAJA(self, valeur):
+        self.MAJ("A", valeur)
+    def MAJB(self, valeur):
+        self.MAJ("B", valeur)
+    def MAJC(self, valeur):
+        self.MAJ("C", valeur)
+    def MAJD(self, valeur):
+        self.MAJ("D", valeur)
+    def MAJE(self, valeur):
+        self.MAJ("E", valeur)
+    def MAJF(self, valeur):
+        self.MAJ("F", valeur)
+    def MAJG(self, valeur):
+        self.MAJ("G", valeur)
+    def MAJH(self, valeur):
+        self.MAJ("H", valeur)
+    def MAJI(self, valeur):
+        self.MAJ("I", valeur)
+    def MAJJ(self, valeur):
+        self.MAJ("J", valeur)
+    def MAJK(self, valeur):
+        self.MAJ("K", valeur)
+    def MAJL(self, valeur):
+        self.MAJ("L", valeur)
+    def MAJM(self, valeur):
+        self.MAJ("M", valeur)
+    def MAJN(self, valeur):
+        self.MAJ("N", valeur)
     def MAJO(self):
-        self.MAJ("O")
+        self.MAJ("O", None)
     def MAJP(self):
-        self.MAJ("P")
-    #def MAJQ(self, val_ignore):
-        #self.MAJ("Q")
-
+        self.MAJ("P", None)
+    #def MAJQ(self, valeur):
+        #self.MAJ("Q", valeur)
 #-------------
-    def MAJ(self, nom):
+    def MAJ(self, nom, valeur):
 
         if nom == "A":
             self.terminal.create_rectangle(0, 0, 200, 20, fill="#fb0")
@@ -203,24 +204,40 @@ class Window(Frame):
             self.terminal.create_rectangle(0, 300, 200, 280, fill="#b6d")
             self.terminal.create_text(100,290,text="O = Led_tete_droite : "+str(self.etat_ledd), fill="white")
             self.etat_ledd = not self.etat_ledd
+            if self.etat_ledd:
+                valeur = 0
+            else:
+                valeur = 1
         if nom == "P":
             self.terminal.create_rectangle(0, 320, 200, 300, fill="#aa8")
             self.terminal.create_text(100,310,text="P = Led_tete_gauche : "+str(self.etat_ledg), fill="white")
             self.etat_ledg = not self.etat_ledg
+            if self.etat_ledg:
+                valeur = 0
+            else:
+                valeur = 1
 
         #if nom == "Q":
             #self.terminal.create_rectangle(0, 320, 200, 300, fill="#aa8")
             #self.terminal.create_text(100,310,text="Q = Buzzer : "+self.tete_y.get(), fill="white")
 
-    def envoi(self):
-        try:
-            if self.LED_state:
-                self.serial.write(bytes('a', encoding="utf-8"))
-            else:
-                self.serial.write(bytes('z', encoding="utf-8"))
-            self.LED_state = not self.LED_state
-        except:
-            messagebox.showwarning("Serial port","Mauvais port série !")
+        self.envoi(nom,valeur)
+
+    def envoi(self, nom, valeur):
+        print(nom+str(valeur))
+        self.terminal.create_rectangle(0, 443, 200, 463, fill="white")
+        self.terminal.create_text(100,453,text="COM8 : 9600 > "+nom+str(valeur), fill="black")
+
+        self.serial.write(bytes(nom+str(valeur), encoding="utf-8"))
+
+        #try:
+        #    if self.LED_state:
+        #        self.serial.write(bytes('a', encoding="utf-8"))
+        #    else:
+        #        self.serial.write(bytes('z', encoding="utf-8"))
+        #    self.LED_state = not self.LED_state
+        #except:
+        #    messagebox.showwarning("Serial port","Mauvais port série !")
 
 
 if __name__ == '__main__':
