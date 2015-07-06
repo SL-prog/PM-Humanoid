@@ -6,7 +6,7 @@ from tkinter import *
 class Window(Frame):
     def __init__(self, master, **kwargs):
         Frame.__init__(self, master, width=600, height=400, **kwargs)
-        self.serial = serial.Serial(port="COM3",baudrate=9600)
+        self.serial = serial.Serial(port="COM8",baudrate=9600)
 
         self.master = master
 
@@ -224,7 +224,7 @@ class Window(Frame):
         self.envoi(nom,valeur)
 
     def envoi(self, nom, valeur):
-        print(nom+str(valeur))
+        #print(bytes(nom+str(valeur), encoding="utf-8"))
         self.terminal.create_rectangle(0, 443, 200, 463, fill="white")
         self.terminal.create_text(100,453,text="COM8 : 9600 > "+nom+str(valeur), fill="black")
 
