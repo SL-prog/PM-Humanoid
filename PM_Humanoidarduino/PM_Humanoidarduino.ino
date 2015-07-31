@@ -124,12 +124,66 @@ void loop() {
        }
        break;
 
-     //case 'M': // envoyer de la puissance vers un transistor en envoyant M130 par ex.
-     //  valeur=constrain(valeur,0,256); // eviter les dépassements
-       //analogWrite(moteur,valeur);
- //      break;
- 
- 
+     case 'A':
+       tete_1_v = valeur;
+       break;
+
+     case 'B':
+       tete_2_v = valeur;
+       break;
+
+     case 'C':
+       epaule_1_droit_v = valeur;
+       break;
+       
+     case 'D':
+      epaule_2_droit_v = valeur;
+       break;
+             
+     case 'E':
+      epaule_1_gauche_v = valeur;
+       break;
+             
+     case 'F':
+      epaule_2_gauche_v = valeur;
+       break;
+
+     case 'G':
+      coude_droit_v = valeur;
+       break;
+
+     case 'H':
+      coude_gauche_v = valeur;
+       break;
+
+     case 'I':
+      hanche_1_droit_v = valeur;
+       break;
+    
+     case 'J':
+      hanche_1_gauche_v = valeur;
+       break;
+   
+     case 'K':
+      hanche_2_droit_v = valeur;
+       break;
+        
+     case 'L':
+      hanche_2_gauche_v = valeur;
+       break;
+   
+     case 'M':
+      genou_droit_v = valeur;
+       break;
+
+     case 'N':
+      genou_gauche_v = valeur;
+       break;
+       
+       }
+   }
+
+ }
    genou_gauche.write(genou_gauche_v);
    genou_droit.write(genou_droit_v);
    hanche_1_gauche.write(hanche_1_gauche_v);
@@ -144,9 +198,5 @@ void loop() {
    coude_droit.write(coude_droit_v);
    tete_1.write(tete_1_v);
    tete_2.write(tete_2_v);
-     }
 
-   }
-
- }
 }
